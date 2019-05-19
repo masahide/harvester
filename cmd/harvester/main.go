@@ -23,12 +23,7 @@ func newConfig() *harvester.Config {
 		Concurrency:   0,
 		MaxAgentConns: 50,
 		User:          os.Getenv("USER"),
-		Hostsfile:     "",
-		ShowHostName:  false,
-		ColorMode:     true,
-		IgnoreHostKey: false,
 		Debug:         false,
-		SortPrint:     true,
 		Timeout:       15 * time.Second,
 	}
 	flag.IntVar(&c.Concurrency, "p", c.Concurrency, "concurrency (defalut \"0\" is unlimit)")

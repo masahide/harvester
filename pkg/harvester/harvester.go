@@ -17,6 +17,7 @@ type Config struct {
 	IgnoreHostKey bool
 	Timeout       time.Duration
 
+	Debug      bool
 	IdentFiles []string
 	// ciphers
 	Kex     []string
