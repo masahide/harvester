@@ -1,0 +1,60 @@
+before:
+  hooks:
+  - go mod download
+builds:
+  - env:
+    - CGO_ENABLED=0
+    main: cmd/harvester/main.go
+    binary: harvester
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+checksum:
+  name_template: '{{ .ProjectName }}_checksums.txt'
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - Merge pull request
+      - Merge branch
+dockers:
+  - image: masahide/harvester
+    tag_templates:
+    - '{{ .Tag }}'
+    - 'v{{ .Major }}.{{ .Minor }}'
+    - 'latest'
+archive:
+  name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    amd64: x86_64
+brew:
+  github:
+    owner: masahide
+    name: harvester
+  folder: Formula
+  homepage:  https://github.com/masahide/harvester
+  description: Cool log harvester like "Harvester Komatsu"
+  test: |
+    system "#{bin}/harvester -v"
+nfpm:
+  name_template: '{{ .ProjectName }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+  homepage:  https://github.com/masahide/harvester
+  description: Cool log harvester like "Harvester Komatsu"
+  maintainer: YAMASAKI Masahide <masahide.y@gmail.com>
+  license: MIT
+  vendor: YAMASAKI Masahide
+  formats:
+    - deb
+    - rpm
+snapcraft:
+  name_template: '{{ .ProjectName }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+  summary: log harvester
+  description: Cool log harvester like "Harvester Komatsu"
+  grade: stable
+  confinement: classic
