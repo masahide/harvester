@@ -23,7 +23,6 @@ _cgo_export.*
 *.test
 *.prof
 
-harvester
 vendor
 coverage.txt
 *coverage.txt
